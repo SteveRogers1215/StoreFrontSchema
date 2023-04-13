@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace StoreFrontSchema.UI.MVC.Models
+namespace StoreFrontSchema.DATA.EF.Models
 {
     public partial class OrderProduct
     {
@@ -11,7 +11,7 @@ namespace StoreFrontSchema.UI.MVC.Models
         public short Quantity { get; set; }
         public decimal ProductPrice { get; set; }
 
-        public virtual Order Order { get; set; } = null!;
-        public virtual Weapon Product { get; set; } = null!;
+        public virtual Order? Order { get; set; } 
+        public virtual Weapon? Product { get; set; } 
     }
 }

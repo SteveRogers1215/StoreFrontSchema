@@ -6,7 +6,7 @@
     ViewData["Title"] = "Edit Role";
 }
 
-<h1>Edit Role</h1>
+<h1><em>@ViewData["Title"]</em></h1>
 <form method="post" class="mt-3">
     <div class="form-group row">
         <label asp-for="Id" class="col-sm-2 col-form-label"></label>
@@ -26,8 +26,8 @@
 
     <div class="form-group row">
         <div class="col-sm-10">
-            <button type="submit" class="btn btn-primary">Update</button>
-            <a asp-action="ListRoles" class="btn btn-primary">Cancel</a>
+            <button type="submit" class="btn btn-dark btn-lg">Update</button>
+            <a asp-action="ListRoles" class="btn btn-secondary btn-lg">Cancel</a>
         </div>
     </div>
 
@@ -49,7 +49,7 @@
             }
         </div>
         <div class="card-footer">
-            <a asp-controller="Administration" asp-action="EditUsersInRole" asp-route-roleId="@Model.Id" class="btn btn-primary" style="width:auto">Add or Remove Users from this Role</a>
+            <a asp-controller="Administration" asp-action="EditUsersInRole" asp-route-roleId="@Model.Id" class="btn btn-dark btn-lg" style="width:auto">Add or Remove Users from this Role</a>
             
         </div>
     </div>
