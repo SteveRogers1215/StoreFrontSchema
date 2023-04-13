@@ -1,0 +1,48 @@
+﻿@model StoreFrontSchema.DATA.EF.Models.Vendor
+
+@{
+    ViewData["Title"] =  Model.SmithName + " Details";
+}
+
+<h1>@ViewData["Title"]</h1>
+
+<div>
+    <h4>Vendor</h4>
+    <hr />
+    <dl class="row">
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.SmithName)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.SmithName)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.Address)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.Address)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.City)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.City)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.Nation)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.Nation)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.Zip)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.Zip)
+        </dd>
+    </dl>
+</div>
+<div>
+    <a asp-action="Edit" asp-route-id="@Model.SmithId" class="btn btn-dark btn-lg">Edit</a> 
+    <a asp-action="Index" class="btn btn-secondary btn-lg">Back to List</a>
+</div>

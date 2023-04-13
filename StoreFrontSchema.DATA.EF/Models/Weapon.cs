@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace StoreFrontSchema.UI.MVC.Models
+namespace StoreFrontSchema.DATA.EF.Models
 {
     public partial class Weapon
     {
@@ -21,8 +21,8 @@ namespace StoreFrontSchema.UI.MVC.Models
         public int SmithId { get; set; }
         public string? ProductImage { get; set; }
 
-        public virtual Category Category { get; set; } = null!;
-        public virtual Vendor Smith { get; set; } = null!;
+        public virtual Category? Category { get; set; }
+        public virtual Vendor? Smith { get; set; } 
         public virtual ICollection<OrderProduct> OrderProducts { get; set; }
     }
 }

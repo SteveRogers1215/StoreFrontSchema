@@ -2,7 +2,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.CodeAnalysis.Options;
 using Microsoft.EntityFrameworkCore;
 using StoreFrontSchema.UI.MVC.Data;
-using StoreFrontSchema.UI.MVC.Models;
+using StoreFrontSchema.DATA.EF.Models;
 using System.Data;
 
 var builder = WebApplication.CreateBuilder(args);
