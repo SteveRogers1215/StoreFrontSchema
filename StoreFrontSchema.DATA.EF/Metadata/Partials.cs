@@ -1,6 +1,8 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -22,5 +24,9 @@ namespace StoreFrontSchema.DATA.EF.Models/*.Metadata*/
     public partial class Vendor { }
     [ModelMetadataType(typeof(WeaponMetadata))]
 
-    public partial class Weapon { }
+    public partial class Weapon 
+    {
+        [NotMapped]
+        public IFormFile? ImageFile { get; set; }
+    }
 }

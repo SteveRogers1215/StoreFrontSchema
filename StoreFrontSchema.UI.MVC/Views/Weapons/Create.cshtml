@@ -7,10 +7,31 @@
 <h1>@ViewData["Title"]</h1>
 
 @*<h4>Weapon</h4>*@
+@{
+    /*
+    * CREATE File Upload Steps
+    * 1) Add IFormFile property to the partial class of the entity you are creating (here, the example is in DATA.EF/Metadata/Partials.cs)
+    * 2) Modify Create View
+    *      - Add enctype="multipart/form-data" to the <form> tag
+    *      - Comment out the <input> for the original file property (here, it's the <input asp-for="ProductImage")
+    *      - Replace with <input type="file" asp-for="[IFormFile property name]" />
+    * 3) (ONLY DO THIS IF YOU ARE UPLOADING IMAGES - DOES NOT APPLY TO PDFs, DOCs, etc...)
+    *      - Open Package Manager Console and run the command 'install-package System.Drawing.Common'
+    *      - Create a folder in the UI project named 'Utilities'
+    *      - Copy/paste ImageUtility.cs into the Utilities folder, open the file in VS
+    *      - If you see errors, use the lightbulb from intellisense to add references
+    * 4) Add code to handle file upload in the Controller (here, it's the Products Create POST action)
+    *      - First, add a property for the controller referencing the webHostEnvironment (see ProductsController - top of the class, prop for webHostEnvironment)
+    *      - Add the webHostEnvironment to the constructor in the controller (see ProductsController constructor)
+    *      - BIND the IFormFile property in the method signature (see the Bind() in the POST action)
+    *      - Add logic to process the file upload and save the file name to the db
+    *          - the file is saved to the web server (aka the UI project), the file name is copied to the DB server
+    */
+}
 <hr />
 <div class="row">
     <div class="col-md-4">
-        <form asp-action="Create">
+        <form asp-action="Create" enctype="multipart/form-data">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <div class="form-group">
                 <label asp-for="ProductName" class="control-label"></label>
@@ -52,12 +73,13 @@
             </div>
             <div class="form-group">
                 <label asp-for="ProductImage" class="control-label"></label>
-                <input asp-for="ProductImage" class="form-control" />
+                @*<input asp-for="ProductImage" class="form-control" />*@
+                <input type="file" asp-for="ImageFile" id="file-btn" class="form-control" />
                 <span asp-validation-for="ProductImage" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <input type="submit" value="Create" class="btn btn-dark d-inline-flex btn-lg" />
-                <a asp-action="Index" class="btn btn-secondary d-inline-flex btn-lg">Back to List</a>
+                <a asp-action="TiledWeapons" class="btn btn-secondary d-inline-flex btn-lg">Back to List</a>
             </div>
         </form>
     </div>

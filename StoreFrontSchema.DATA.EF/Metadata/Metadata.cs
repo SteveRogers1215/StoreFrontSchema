@@ -32,41 +32,35 @@ namespace StoreFrontSchema.DATA.EF.Models/*.Metadata*/
         [DisplayFormat(NullDisplayText ="NULL")]
         [StringLength(500)]
         [Display(Name = "Date Ordered")]
-        [Range(0, 500, ErrorMessage = "X")]
         public string OrderDate { get; set; }
         [Required]
         [DisplayFormat(NullDisplayText = "NULL")]
         [StringLength(500)]
         [Display(Name = "Date Shipped")]
-        [Range(0, 500, ErrorMessage = "X")]
 
         public string ShipDate { get; set; }
         [Required]
         [DisplayFormat(NullDisplayText = "NULL")]
         [StringLength(500)]
         [Display(Name = "Shipped To")]
-        [Range(0, 500, ErrorMessage = "X")]
 
         public string ShipTo { get; set; }
         [Required]
         [DisplayFormat(NullDisplayText = "NULL")]
         [StringLength(25)]
         [Display(Name = "City")]
-        [Range(0, 25, ErrorMessage = "X")]
 
         public string ShipCity { get; set; }
         [Required]
         [DisplayFormat(NullDisplayText = "NULL")]
         [StringLength(25)]
         [Display(Name = "Nation")]
-        [Range(0, 25, ErrorMessage = "X")]
 
         public string ShipNation { get; set; }
         [Required]
         [DisplayFormat(NullDisplayText = "NULL")]
         [StringLength(5)]
         [Display(Name = "Zip Code")]
-        [Range(0, 5, ErrorMessage = "X")]
 
         public string ShipZip { get; set; }
 

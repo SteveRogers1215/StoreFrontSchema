@@ -7,9 +7,14 @@
 <h1><em>@ViewData["Title"]</em></h1>
 
 
-<p>
-    <a asp-action="Create">Add New Weapon</a>
-</p>
+<p align="center">
+    @if (User.IsInRole("Admin"))
+    {
+        <a asp-action="Create">Add New Weapon</a> <span>|</span>
+
+    }
+
+    <a asp-action="TiledWeapons">Tiled View</a>
 <table class="table">
     <thead>
         <tr>
