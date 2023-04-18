@@ -1,17 +1,20 @@
 ﻿@model IEnumerable<StoreFrontSchema.DATA.EF.Models.Order>
 
 @{
-    ViewData["Title"] = "Create New Order";
+    ViewData["Title"] = "Index";
 }
 
-@*<h1>Index</h1>*@
+<h1>Index</h1>
 
 <p>
-    <a asp-action="Create">Create New Order</a>
+    <a asp-action="Create">Create New</a>
 </p>
 <table class="table">
     <thead>
         <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.UserId)
+            </th>
             <th>
                 @Html.DisplayNameFor(model => model.OrderDate)
             </th>
@@ -30,15 +33,15 @@
             <th>
                 @Html.DisplayNameFor(model => model.ShipZip)
             </th>
-            <th>
-                @Html.DisplayNameFor(model => model.User)
-            </th>
             <th></th>
         </tr>
     </thead>
     <tbody>
 @foreach (var item in Model) {
         <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.UserId)
+            </td>
             <td>
                 @Html.DisplayFor(modelItem => item.OrderDate)
             </td>
@@ -56,9 +59,6 @@
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.ShipZip)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.User.FirstName)
             </td>
             <td>
                 <a asp-action="Edit" asp-route-id="@item.OrderId">Edit</a> |

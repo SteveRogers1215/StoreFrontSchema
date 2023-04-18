@@ -1,7 +1,7 @@
 ﻿@page
 @model RegisterModel
 @{
-    ViewData["Title"] = "Register New User";
+    ViewData["Title"] = "Register a New Account";
 }
 
 <h1>@ViewData["Title"]</h1>
@@ -9,7 +9,7 @@
 <div class="row">
     <div class="col-md-4">
         <form id="registerForm" asp-route-returnUrl="@Model.ReturnUrl" method="post">
-            <h2>Create a new account.</h2>
+            @*<h2>Create a new account.</h2>*@
             <hr />
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <div class="form-floating">
@@ -17,6 +17,38 @@
                 <label asp-for="Input.Email"></label>
                 <span asp-validation-for="Input.Email" class="text-danger"></span>
             </div>
+            <!--CUSTOM USER DETAIL INPUTS-->
+            <div class="form-floating">
+                <label asp-for="Input.FirstName"></label>
+                <input asp-for="Input.FirstName" class="form-control" autocomplete="firstname" aria-required="true" />
+                <span asp-validation-for="Input.FirstName" class="text-danger"></span>
+            </div>
+            <div class="form-floating">
+                <label asp-for="Input.LastName"></label>
+                <input asp-for="Input.LastName" class="form-control" autocomplete="lastname" aria-required="true" />
+                <span asp-validation-for="Input.LastName" class="text-danger"></span>
+            </div>
+            <div class="form-floating">
+                <label asp-for="Input.Address"></label>
+                <input asp-for="Input.Address" class="form-control" autocomplete="address" aria-required="true" />
+                <span asp-validation-for="Input.Address" class="text-danger"></span>
+            </div>
+            <div class="form-floating">
+                <label asp-for="Input.City"></label>
+                <input asp-for="Input.City" class="form-control" autocomplete="city" aria-required="true" />
+                <span asp-validation-for="Input.City" class="text-danger"></span>
+            </div>
+            <div class="form-floating">
+                <label asp-for="Input.Nation"></label>
+                <input asp-for="Input.Nation" class="form-control" autocomplete="nation" aria-required="true" />
+                <span asp-validation-for="Input.Nation" class="text-danger"></span>
+            </div>
+            <div class="form-floating">
+                <label asp-for="Input.Zip"></label>
+                <input asp-for="Input.Zip" class="form-control" autocomplete="zip" aria-required="true" />
+                <span asp-validation-for="Input.Zip" class="text-danger"></span>
+            </div>            
+            <!--END CUSTOM USER DETAIL INPUTS-->
             <div class="form-floating">
                 <input asp-for="Input.Password" class="form-control" autocomplete="new-password" aria-required="true" />
                 <label asp-for="Input.Password"></label>

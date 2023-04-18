@@ -11,7 +11,7 @@ namespace StoreFrontSchema.DATA.EF.Models
         public short Quantity { get; set; }
         public decimal ProductPrice { get; set; }
 
-        public virtual Order? Order { get; set; } 
-        public virtual Weapon? Product { get; set; } 
+        public virtual Order Order { get; set; } = null!;
+        public virtual Weapon Product { get; set; } = null!;
     }
 }

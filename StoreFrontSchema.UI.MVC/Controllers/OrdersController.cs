@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
@@ -10,7 +9,6 @@ using StoreFrontSchema.DATA.EF.Models;
 
 namespace StoreFrontSchema.UI.MVC.Controllers
 {
-    [Authorize(Roles = "Admin")]
     public class OrdersController : Controller
     {
         private readonly StoreFrontSchemaContext _context;
@@ -21,15 +19,14 @@ namespace StoreFrontSchema.UI.MVC.Controllers
         }
 
         // GET: Orders
-        [AllowAnonymous]
         public async Task<IActionResult> Index()
         {
-            var storeFrontSchemaContext = _context.Orders.Include(o => o.User);
-            return View(await storeFrontSchemaContext.ToListAsync());
+              return _context.Orders != null ? 
+                          View(await _context.Orders.ToListAsync()) :
+                          Problem("Entity set 'StoreFrontSchemaContext.Orders'  is null.");
         }
 
         // GET: Orders/Details/5
-        [AllowAnonymous]
         public async Task<IActionResult> Details(int? id)
         {
             if (id == null || _context.Orders == null)
@@ -38,7 +35,6 @@ namespace StoreFrontSchema.UI.MVC.Controllers
             }
 
             var order = await _context.Orders
-                .Include(o => o.User)
                 .FirstOrDefaultAsync(m => m.OrderId == id);
             if (order == null)
             {
@@ -51,7 +47,6 @@ namespace StoreFrontSchema.UI.MVC.Controllers
         // GET: Orders/Create
         public IActionResult Create()
         {
-            ViewData["UserId"] = new SelectList(_context.UserDetails, "UserId", "FirstName");
             return View();
         }
 
@@ -68,7 +63,6 @@ namespace StoreFrontSchema.UI.MVC.Controllers
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["UserId"] = new SelectList(_context.UserDetails, "UserId", "FirstName", order.UserId);
             return View(order);
         }
 
@@ -85,7 +79,6 @@ namespace StoreFrontSchema.UI.MVC.Controllers
             {
                 return NotFound();
             }
-            ViewData["UserId"] = new SelectList(_context.UserDetails, "UserId", "FirstName", order.UserId);
             return View(order);
         }
 
@@ -121,7 +114,6 @@ namespace StoreFrontSchema.UI.MVC.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["UserId"] = new SelectList(_context.UserDetails, "UserId", "FirstName", order.UserId);
             return View(order);
         }
 
@@ -134,7 +126,6 @@ namespace StoreFrontSchema.UI.MVC.Controllers
             }
 
             var order = await _context.Orders
-                .Include(o => o.User)
                 .FirstOrDefaultAsync(m => m.OrderId == id);
             if (order == null)
             {

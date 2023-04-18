@@ -11,7 +11,7 @@ namespace StoreFrontSchema.DATA.EF.Models
         }
 
         public int OrderId { get; set; }
-        public int? UserId { get; set; }
+        public string UserId { get; set; } = null!;
         public string? OrderDate { get; set; }
         public string? ShipDate { get; set; }
         public string? ShipTo { get; set; }
@@ -19,7 +19,6 @@ namespace StoreFrontSchema.DATA.EF.Models
         public string? ShipNation { get; set; }
         public string? ShipZip { get; set; }
 
-        public virtual UserDetail? User { get; set; }
         public virtual ICollection<OrderProduct> OrderProducts { get; set; }
     }
 }

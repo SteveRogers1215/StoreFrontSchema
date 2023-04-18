@@ -34,7 +34,7 @@ namespace StoreFrontSchema.DATA.EF.Models
             if (!optionsBuilder.IsConfigured)
             {
 #warning To protect potentially sensitive information in your connection string, you should move it out of source code. You can avoid scaffolding the connection string by using the Name= syntax to read it from configuration - see https://go.microsoft.com/fwlink/?linkid=2131148. For more guidance on storing connection strings, see http://go.microsoft.com/fwlink/?LinkId=723263.
-                optionsBuilder.UseSqlServer("Server=.\\sqlexpress;Database=StoreFrontSchema;Trusted_Connection=True;MultipleActiveResultSets=True;");
+                optionsBuilder.UseSqlServer("server=.\\sqlexpress;database=StoreFrontSchema;trusted_connection=true;multipleactiveresultsets=true;");
             }
         }
 
@@ -144,10 +144,9 @@ namespace StoreFrontSchema.DATA.EF.Models
 
                 entity.Property(e => e.ShipZip).HasMaxLength(5);
 
-                entity.HasOne(d => d.User)
-                    .WithMany(p => p.Orders)
-                    .HasForeignKey(d => d.UserId)
-                    .HasConstraintName("FK_Orders_UserDetails");
+                entity.Property(e => e.UserId)
+                    .HasMaxLength(128)
+                    .IsUnicode(false);
             });
 
             modelBuilder.Entity<OrderProduct>(entity =>
@@ -169,7 +168,7 @@ namespace StoreFrontSchema.DATA.EF.Models
 
             modelBuilder.Entity<UserDetail>(entity =>
             {
-                entity.HasKey(e => e.UserId);
+                entity.HasNoKey();
 
                 entity.Property(e => e.Address)
                     .HasMaxLength(10)
@@ -182,6 +181,10 @@ namespace StoreFrontSchema.DATA.EF.Models
                 entity.Property(e => e.LastName).HasMaxLength(40);
 
                 entity.Property(e => e.Nation).HasMaxLength(25);
+
+                entity.Property(e => e.UserId)
+                    .HasMaxLength(128)
+                    .IsUnicode(false);
 
                 entity.Property(e => e.Zip).HasMaxLength(5);
             });

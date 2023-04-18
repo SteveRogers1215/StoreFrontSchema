@@ -18,6 +18,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.WebUtilities;
 using Microsoft.Extensions.Logging;
+using StoreFrontSchema.DATA.EF.Models;
 
 namespace StoreFrontSchema.UI.MVC.Areas.Identity.Pages.Account
 {
@@ -97,6 +98,37 @@ namespace StoreFrontSchema.UI.MVC.Areas.Identity.Pages.Account
             [Display(Name = "Confirm password")]
             [Compare("Password", ErrorMessage = "The password and confirmation password do not match.")]
             public string ConfirmPassword { get; set; }
+
+            //NOTES!!!!!!!!!!!!!!!!
+            //We added the props below so we can include this info in text boxes in the View.
+
+            //The use of ! and ? below are what we call "null-forgiving operators", which basically lets the compiler know which info should be considered nullable or not nullable.
+
+            [Required]
+            [StringLength(40, ErrorMessage = "*Must be 50 characters or less")]
+            [Display(Name = "First Name")]
+            public string FirstName { get; set; } = null!;
+
+            [Required]
+            [StringLength(40, ErrorMessage = "*Must be 50 characters or less")]
+            [Display(Name = "Last Name")]
+            public string LastName { get; set; } = null!;
+
+            [StringLength(10, ErrorMessage = "*Must be 150 characters or less")]
+            public string? Address { get; set; }
+
+            [StringLength(25, ErrorMessage = "*Must be 50 characters or less")]
+            public string? City { get; set; }
+
+            [StringLength(25, ErrorMessage = "*Must be 2 characters or less")]
+            public string? Nation { get; set; }
+
+            [StringLength(5, ErrorMessage = "*Must be 5 characters or less")]
+            [DataType(DataType.PostalCode)]
+            [Display(Name = "Zip Code")]
+            public string? Zip { get; set; }
+
+            
         }
 
 
@@ -123,6 +155,25 @@ namespace StoreFrontSchema.UI.MVC.Areas.Identity.Pages.Account
                     _logger.LogInformation("User created a new account with password.");
 
                     var userId = await _userManager.GetUserIdAsync(user);
+
+                    StoreFrontSchemaContext _context = new StoreFrontSchemaContext();
+
+                    UserDetail userDetail = new UserDetail()
+                    {
+                        //UserId = userId,
+                        FirstName = Input.FirstName,
+                        LastName = Input.LastName,
+                        Address = Input.Address,
+                        City = Input.City,
+                        Nation = Input.Nation,
+                        Zip = Input.Zip
+                    };
+                    _context.UserDetails.Add(userDetail);
+                    _context.SaveChanges();
+
+
+
+
                     var code = await _userManager.GenerateEmailConfirmationTokenAsync(user);
                     code = WebEncoders.Base64UrlEncode(Encoding.UTF8.GetBytes(code));
                     var callbackUrl = Url.Page(

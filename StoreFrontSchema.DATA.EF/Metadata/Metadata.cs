@@ -9,12 +9,13 @@ namespace StoreFrontSchema.DATA.EF.Models/*.Metadata*/
 {
     public class CategoryMetadata
     {
-        public int CategoryId { get; set; }
+        //public int CategoryId { get; set; }
         [Required]
         [Display(Name ="Category")]
         [StringLength(40)]
         [Range(0, 40, ErrorMessage = "X")]
         public string CategoryName { get; set; } = null!;
+
         [Required]
         [DisplayFormat(NullDisplayText = "NULL")]
         [Display(Name = "Description")]
@@ -25,8 +26,8 @@ namespace StoreFrontSchema.DATA.EF.Models/*.Metadata*/
 
     public class OrderMetadata
     {
-        public int OrderId { get; set; } 
-        public int UserId { get; set; }
+        //public int OrderId { get; set; } 
+        //public int UserId { get; set; }
 
         [Required]
         [DisplayFormat(NullDisplayText ="NULL")]
@@ -68,19 +69,21 @@ namespace StoreFrontSchema.DATA.EF.Models/*.Metadata*/
     }
     public class OrderProductMetadata
     {
-        public int OrderProductId { get; set; }
-        public int ProductId { get; set; }
-        public int OrderId { get; set; }
+        //public int OrderProductId { get; set; }
+        //public int ProductId { get; set; }
+        //public int OrderId { get; set; }
         [Required]
         public short Quantity { get; set; }
         [Required]
         [Display(Name = "Price")]
-        [DisplayFormat(ApplyFormatInEditMode = false, DataFormatString = "{0:c}")]
+        [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:c}")]
+        [DataType(DataType.Currency)]
+        [Range(0, double.MaxValue)]
         public decimal ProductPrice { get; set; } 
     }
     public class UserDetailMetadata
     {
-        public int UserId { get; set; }
+        //public int UserId { get; set; }
         [Required]
         [StringLength(40)]
 
