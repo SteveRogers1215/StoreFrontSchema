@@ -147,6 +147,12 @@ namespace StoreFrontSchema.DATA.EF.Models
                 entity.Property(e => e.UserId)
                     .HasMaxLength(128)
                     .IsUnicode(false);
+
+                entity.HasOne(d => d.User)
+                    .WithMany(p => p.Orders)
+                    .HasForeignKey(d => d.UserId)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FK_Orders_UserDetails");
             });
 
             modelBuilder.Entity<OrderProduct>(entity =>
@@ -168,7 +174,11 @@ namespace StoreFrontSchema.DATA.EF.Models
 
             modelBuilder.Entity<UserDetail>(entity =>
             {
-                entity.HasNoKey();
+                entity.HasKey(e => e.UserId);
+
+                entity.Property(e => e.UserId)
+                    .HasMaxLength(128)
+                    .IsUnicode(false);
 
                 entity.Property(e => e.Address)
                     .HasMaxLength(10)
@@ -181,10 +191,6 @@ namespace StoreFrontSchema.DATA.EF.Models
                 entity.Property(e => e.LastName).HasMaxLength(40);
 
                 entity.Property(e => e.Nation).HasMaxLength(25);
-
-                entity.Property(e => e.UserId)
-                    .HasMaxLength(128)
-                    .IsUnicode(false);
 
                 entity.Property(e => e.Zip).HasMaxLength(5);
             });

@@ -1,7 +1,7 @@
 ﻿@model IEnumerable<StoreFrontSchema.DATA.EF.Models.Weapon>
 
 @{
-    ViewData["Title"] = "Our Products";
+    ViewData["Title"] = "Our Weapons";
 }
 
 <h1><em>@ViewData["Title"]</em></h1>
@@ -10,85 +10,90 @@
 <p align="center">
     @if (User.IsInRole("Admin"))
     {
-        <a asp-action="Create">Add New Weapon</a> <span>|</span>
+         <span>
+            <a asp-action="Create">Add New Weapon</a> |
+            <a asp-action="Discontinued">Discontinued Weapons</a> |
+         </span>
 
     }
-
-    <a asp-action="TiledWeapons">Tiled View</a>
-<table class="table">
-    <thead>
-        <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.ProductName)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.ProductPrice)
-            </th>
-            @*<th>
+    <a asp-action="TiledWeapons">Tile View</a>
+</p>
+    <table class="table">
+        <thead>
+            <tr>
+                <th>
+                    @Html.DisplayNameFor(model => model.ProductName)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.ProductPrice)
+                </th>
+                @*<th>
                 @Html.DisplayNameFor(model => model.ProductDescription)
-            </th>*@
-            <th>
-                @Html.DisplayNameFor(model => model.InStock)
-            </th>
-            @*<th>
+                </th>*@
+                @*<th>
+                    @Html.DisplayNameFor(model => model.InStock)
+                </th>*@
+                @*<th>
                 @Html.DisplayNameFor(model => model.BackOrder)
-            </th>
-            <th>
+                </th>
+                <th>
                 @Html.DisplayNameFor(model => model.IsDiscontinued)
-            </th>*@
-            <th>
-                @Html.DisplayNameFor(model => model.ProductImage)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Category)
-            </th>
-            @*<th>
+                </th>*@
+                <th>
+                    @Html.DisplayNameFor(model => model.ProductImage)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Category)
+                </th>
+                <th>
                 @Html.DisplayNameFor(model => model.Smith)
-            </th>*@
-            <th></th>
-        </tr>
-    </thead>
-    <tbody>
-@foreach (var item in Model) {
-        <tr>
-            <td>
-                    <a asp-action="Details" asp-route-id="@item.ProductId">
-                        @Html.DisplayFor(modelItem => item.ProductName)
-                    </a>
-            </td>
-            @*<td>
+                </th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>
+                        <a asp-action="Details" asp-route-id="@item.ProductId">
+                            @Html.DisplayFor(modelItem => item.ProductName)
+                        </a>
+                    </td>
+                    @*<td>
                 @Html.DisplayFor(modelItem => item.ProductName)
-            </td>*@
-            <td>
-                @Html.DisplayFor(modelItem => item.ProductPrice)
-            </td>
-            @*<td>
+                </td>*@
+                    <td>
+                        @Html.DisplayFor(modelItem => item.ProductPrice)
+                    </td>
+                    @*<td>
                 @Html.DisplayFor(modelItem => item.ProductDescription)
-            </td>*@
-            <td>
-                @Html.DisplayFor(modelItem => item.InStock)
-            </td>
-            @*<td>
+                </td>*@
+                    @*<td>
+                        @Html.DisplayFor(modelItem => item.InStock)
+                    </td>*@
+                    @*<td>
                 @Html.DisplayFor(modelItem => item.BackOrder)
-            </td>
-            <td>
+                </td>
+                <td>
                 @Html.DisplayFor(modelItem => item.IsDiscontinued)
-            </td>*@
-            <td>
-                @Html.DisplayFor(modelItem => item.ProductImage)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Category.CategoryName)
-            </td>
-            @*<td>
-                @Html.DisplayFor(modelItem => item.Smith.SmithName)
-            </td>*@
-            <td>
-                <a asp-action="Edit" asp-route-id="@item.ProductId">Edit</a> |
-@*                <a asp-action="Details" asp-route-id="@item.ProductId">Details</a> |
-*@                <a asp-action="Delete" asp-route-id="@item.ProductId">Delete</a>
-            </td>
-        </tr>
-}
-    </tbody>
-</table>
+                </td>*@
+                    <td>
+                        @*@Html.DisplayFor(modelItem => item.ProductImage)*@
+                        <img src="~/images/@item.ProductImage" name="Image" class="img-fluid" alt="@item.ProductDescription"/>
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Category.CategoryName)
+                    </td>
+                    <td>
+                         @Html.DisplayFor(modelItem => item.Smith.SmithName)
+                    </td>
+                    <td>
+                        <a asp-action="Edit" asp-route-id="@item.ProductId">Edit</a>|
+                        @*                <a asp-action="Details" asp-route-id="@item.ProductId">Details</a> |
+                    *@                <a asp-action="Delete" asp-route-id="@item.ProductId">Delete</a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>

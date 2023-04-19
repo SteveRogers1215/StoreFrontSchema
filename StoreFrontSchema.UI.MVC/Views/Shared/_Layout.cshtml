@@ -1,4 +1,19 @@
-﻿<!DOCTYPE html>
+﻿@*
+    Added the two lines below to lock down certain nav items.
+    These are required to check the Authentication of a user (aka whether or not they are logged in)
+*@
+@using Microsoft.AspNetCore.Identity
+@inject SignInManager<IdentityUser> signInManager
+
+@*
+    Adding the two lines below to grant access to the classes
+    and methods we need to display our ShoppingCart Product Count 4/19/23
+*@
+@using Microsoft.AspNetCore.Http
+@using Newtonsoft.Json
+
+
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <!-- basic -->
@@ -30,6 +45,7 @@
     <link rel="stylesheet" href="~/css/owl.carousel.min.css">
     <link rel="stylesoeet" href="~/css/owl.theme.default.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fancybox/2.1.5/jquery.fancybox.min.css" media="screen">
+    <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
 </head>
 <body>
     <!-- header section start -->
@@ -72,6 +88,13 @@
                 </ul>
 
                 <partial name="_loginPartial" />
+
+                <li>
+                    <a>
+                        <i class='bx bxs-cart'></i>
+                    </a>
+                </li>
+
                 
                 @*<form class="form-inline my-2 my-lg-0">
                     <div class="login_menu">
