@@ -19,6 +19,7 @@ namespace StoreFrontSchema.DATA.EF.Models
         public string? ShipNation { get; set; }
         public string? ShipZip { get; set; }
 
+        public virtual UserDetail User { get; set; } = null!;
         public virtual ICollection<OrderProduct> OrderProducts { get; set; }
     }
 }

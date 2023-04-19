@@ -160,7 +160,7 @@ namespace StoreFrontSchema.UI.MVC.Areas.Identity.Pages.Account
 
                     UserDetail userDetail = new UserDetail()
                     {
-                        //UserId = userId,
+                        UserId = userId,
                         FirstName = Input.FirstName,
                         LastName = Input.LastName,
                         Address = Input.Address,

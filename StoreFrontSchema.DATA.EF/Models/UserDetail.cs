@@ -1,12 +1,15 @@
-﻿using Microsoft.EntityFrameworkCore;
-using System;
+﻿using System;
 using System.Collections.Generic;
 
 namespace StoreFrontSchema.DATA.EF.Models
 {
-    [Keyless]
     public partial class UserDetail
     {
+        public UserDetail()
+        {
+            Orders = new HashSet<Order>();
+        }
+
         public string UserId { get; set; } = null!;
         public string FirstName { get; set; } = null!;
         public string LastName { get; set; } = null!;
@@ -14,5 +17,7 @@ namespace StoreFrontSchema.DATA.EF.Models
         public string? City { get; set; }
         public string? Nation { get; set; }
         public string? Zip { get; set; }
+
+        public virtual ICollection<Order> Orders { get; set; }
     }
 }
