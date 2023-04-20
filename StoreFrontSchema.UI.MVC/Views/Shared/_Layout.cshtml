@@ -45,7 +45,12 @@
     <link rel="stylesheet" href="~/css/owl.carousel.min.css">
     <link rel="stylesoeet" href="~/css/owl.theme.default.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fancybox/2.1.5/jquery.fancybox.min.css" media="screen">
-    <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+    <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'><!--Styling for shopping cart icon-->
+    <!-- Datatables Style -->
+    <link href="//cdn.datatables.net/1.13.4/css/jquery.dataTables.min.css" rel="stylesheet" /> <!--4/20/23-->
+    <!-- Paged List Style -->
+    <link href="~/css/PagedList.css" rel="stylesheet" />
+
 </head>
 <body>
     <!-- header section start -->
@@ -86,12 +91,46 @@
                         </ul>
                     </li>
                 </ul>
+                @{
+                    //Create a bool to determine if there are items in the cart 4/19/2023
+                    bool cartHasProducts = false;
+
+                    //Create variable to store the number of products
+                    int productCount = 0;
+
+                    //Check if the "cart" string exists in the session
+                    if (!string.IsNullOrEmpty(Context.Session.GetString("cart")))
+                    {
+                        //If so, there are items in the cart -- flip the bool
+                        cartHasProducts = true;
+
+                        //Create the dictionary to hold the cart items
+                        var products = new Dictionary<int, CartItemViewModel>();
+
+                        //Deserialize the session cart and store in the dictionary
+                        products = JsonConvert.DeserializeObject<Dictionary<int, CartItemViewModel>>
+                        (Context.Session.GetString("cart"));
+
+                        //Assign the sum of the quantity of cart items
+                        productCount = products.Sum(p => p.Value.Qty);
+
+                    }
+                }
 
                 <partial name="_loginPartial" />
 
-                <li>
-                    <a>
-                        <i class='bx bxs-cart'></i>
+                <li class="nav-item">
+                    <a class="nav-link" asp-action="Index" asp-controller="ShoppingCart"> <!--Still needs to be visible in Admin mode 4/20/23-->
+                        @if (cartHasProducts)
+                        {
+                            <sup style="color:white; background-color:red; border-radius:40%; display:inline-block; height:1em; padding: 1em; text-align:center">
+
+                                @productCount
+
+                            </sup>
+                        }
+                        <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAB4AAAAeCAYAAAA7MK6iAAAAAXNSR0IArs4c6QAAAZBJREFUSEvNlrsyBEEUhr+Vuz0BQhGZ0OUJeAIklIiQiIyQSJHgCXgCl1BGJMQTuOWoX/VMHatnpnumt0ZXbdXuzunz9fn7XKZDS6vTEpd/AR4FRowCN71Uw0a8A2wb2CswC9z14gBlYPGuHTw524IltT5a88C6+66odYCkqyi5hoAXRzoDlpJSoTSrT4FFB5xJAH6z+VJWToJdJQBaFwvAhf6oqmNl9ERC+DIgJSvButuThOBhQGVaCVaSPQGDCeC/krRKavH2TWk14ef3GxKxbFTbj02IwLPpET+uQiLOOth0A/gBsGH3h4LVyc4bgMdcruQuQsHaoCSz0yv0HPfAZLdxDLh7eoWC89qtI7X22P4dCpVdXrt1wXVK609SZfAYqbM9MQOjcJzWAa842Q+BD4/m/cCaa43HRXcSC94FNp0zTa45j+NL89ayB2z54LFg6/QL6PM4/TSNqehwwZ0r8y+Zj9wPybjqAeu57LT03Ct3bMRyNg4MALclNTUFvAMPqe44pn5LbetEnATeGvgb9fI5HwAK1bkAAAAASUVORK5CYII=" alt="ShoppingCart" />
+                        <!--Shopping Cart that I cant get to work above-->
                     </a>
                 </li>
 
@@ -218,6 +257,11 @@
     <script src="~/js/popper.min.js"></script>
     <script src="~/js/bootstrap.bundle.min.js"></script>
     <script src="~/js/jquery-3.0.0.min.js"></script>
+
+    <!--(4/20/23)Script below was pulled from http://datatables.net-->
+    <!--DataTables.js-->
+    <script src="//cdn.datatables.net/1.13.4/js/jquery.dataTables.min.js"></script>
+
     <script src="~/js/plugin.js"></script>
     <!-- sidebar -->
     <script src="~/js/jquery.mCustomScrollbar.concat.min.js"></script>

@@ -10,6 +10,7 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using StoreFrontSchema.DATA.EF.Models;
 using StoreFrontSchema.UI.MVC.Utilities;
+using X.PagedList;
 
 namespace StoreFrontSchema.UI.MVC.Controllers
 {
@@ -33,24 +34,105 @@ namespace StoreFrontSchema.UI.MVC.Controllers
             var storeFrontSchemaContext = _context.Weapons.Include(w => w.Category).Include(w => w.Smith);
             return View(await storeFrontSchemaContext.ToListAsync());
         }
+
+        #region Implementing Paged List
+
+        //1) Install package for X.PagedList.Mvc.Core
+        //      - Open Package Manger Console -> select the UI project -> install-package x.pagedlist.mvc.core
+        //2) Add using statements and update model declaration in the View
+        //3) Add using statement to Controller
+        //4) Add param to Controller Action
+        //5) Add page size variable in Action
+        //6) Update return statement in Controller Action
+        //7) Add Counter in View
+        // 8) Create a new CSS file in wwwroot/css named 'PagedList.css'
+        //      - NOTE: We may need to go to the package's NuGet page and copy the CSS directly
+        //      - X.PagedList CSS file link (go here to copy the code):https://github.com/dncuug/X.PagedList/blob/master/examples/Example.Website/wwwroot/css/PagedList.css
+        // 9) Add a <link> to the _Layout referencing 'PagedList.css'
+
+        #endregion
+
         [AllowAnonymous]
-        public async Task<IActionResult> TiledWeapons()
+        public async Task<IActionResult> TiledWeapons(string searchTerm, int categoryId = 0, int page = 1)
         {
-            if (User.IsInRole("Admin"))
+            //if (User.IsInRole("Admin"))
+            //{
+            //    var weapons = _context.Weapons
+            //    .Include(w => w.Category)
+            //    .Include(w => w.Smith)
+            //    .Include(w => w.OrderProducts);
+            //    return View(await weapons.ToListAsync());
+            //}
+            //else
+            //{
+            //    var weapons = _context.Weapons.Where(w => w.IsDiscontinued == false && w.InStock > 0)
+            //    .Include(w => w.Category)
+            //    .Include(w => w.Smith)
+            //    .Include(w => w.OrderProducts);
+            //    return View(await weapons.ToListAsync());
+
+            //}
+            int pageSize = 6;
+
+
+            var weapons = _context.Weapons.Where(p => !p.IsDiscontinued)
+               .Include(p => p.Category)
+               .Include(p => p.Smith)
+               .Include(p => p.OrderProducts).ToList();
+
+            #region Optional Category Filter
+
+            //Create a ViewData object to send a list of categories to View. This is the same as we see in products/create 4/20/23
+
+            ViewData["CategoryId"] = new SelectList(_context.Categories, "CategoryId", "CategoryName");
+
+
+            //Create a ViewBag variable to persist selected category
+            ViewBag.Category = 0;
+
+            if (categoryId != 0)
             {
-                var weapons = _context.Weapons
-                .Include(w => w.Category).Include(w => w.Smith).Include(w => w.OrderProducts);
-                return View(await weapons.ToListAsync());
+                weapons = weapons.Where(p => p.CategoryId == categoryId).ToList();
+
+                //Repopulate the dropdown with current category selected.
+                ViewData["CategoryId"] = new SelectList(_context.Categories, "CategoryId", "CategoryName", categoryId);
+
+                ViewBag.Category = categoryId;
+
+            }
+
+            #endregion
+
+
+
+            #region Optional Search Filter
+
+            if (!String.IsNullOrEmpty(searchTerm))
+            {
+                weapons = weapons.Where(p =>
+                    p.ProductName.ToLower().Contains(searchTerm.ToLower()) ||
+                    p.Smith.SmithName.ToLower().Contains(searchTerm.ToLower()) ||
+                    p.Category.CategoryName.ToLower().Contains(searchTerm.ToLower()) ||
+                    p.ProductDescription.ToLower().Contains(searchTerm.ToLower())).ToList();
+
+                //ViewBag for the total number of results
+                ViewBag.NbrResults = weapons.Count;
+
+                //ViewBag for search term
+                ViewBag.SearchTerm = searchTerm;
+
             }
             else
             {
-                var weapons = _context.Weapons.Where(w => w.IsDiscontinued == false && w.InStock > 0)
-
-                .Include(w => w.Category).Include(w => w.Smith).Include(w => w.OrderProducts);
-                return View(await weapons.ToListAsync());
-                
+                ViewBag.NbrResults = null;
+                ViewBag.SearchTerm = null;
             }
-            
+
+            #endregion
+
+            //return View(weapons);
+            return View(weapons.ToPagedList(page, pageSize));
+
         }
 
         // GET: Weapons/Details/5
