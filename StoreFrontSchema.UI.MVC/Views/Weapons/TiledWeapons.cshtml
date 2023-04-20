@@ -1,10 +1,19 @@
-﻿@model IEnumerable<StoreFrontSchema.DATA.EF.Models.Weapon>
+﻿@*@model IEnumerable<StoreFrontSchema.DATA.EF.Models.Weapon>
+*@
+@*
+    To utilize X.PagedList we will need to add the using statements below.
+    We will also need to update the @model declaration to use IPagedList
+*@
+
+@model IPagedList<StoreFrontSchema.DATA.EF.Models.Weapon>
+
+@using X.PagedList
+@using X.PagedList.Mvc.Core
 
 @{
     ViewData["Title"] = "Tiled Weapons";
 }
 
-@*<h1>TiledWeapons</h1>*@
 
 <section class="product_section layout_padding">
     <div class="container">
@@ -21,7 +30,60 @@
             }
             <a asp-action="Index">Table View</a>
         </p>
+
+        @*
+        Implementing search: 4/20/23
+        - Add a <form>
+        - Add an <input> textbox
+        - Add an <input> submit
+        - Add an if() to display the number of results and search term
+        - Add search logic to Controller Action
+        *@
+
         <div class="row">
+
+            <div class="offset-3 col-sm-6">
+
+                <form asp-action="TiledWeapons" method="get">
+
+                    @*
+                    method="get" > Appends the key/value pairs from a
+                    form onto the query string in our URL. The ? in the URL
+                    indicates the beginning of aquery string.
+                    Everything after that ? is a key/value pair(KVP)
+                    *@
+                    
+                    <label for="categoryId" class="control-label text-center d-block">Filter by Category</label>
+                    <select name="categoryId" class="form-control text-center mb-3" asp-items="ViewBag.CategoryId">
+                            <option value="0">[Choose a Category]</option>
+                    </select>
+
+                    
+
+                    @*
+                    Inputs for search
+                    *@
+                    <input type="text" name="searchTerm" class="form-control text-center" placeholder="Search Weapons..." />
+                    <input type="submit" value="Go" class="btn btn-primary text-center w-50 d-block" />
+
+
+                </form>
+
+                @*
+                Display the number of results
+                *@
+                @if (ViewBag.NbrResults != null)
+                {
+                    <p class="mt-5 p-2 alert-warning text-center">
+                        Showing @ViewBag.NbrResults result@(ViewBag.NbrResults > 1 ? "s" : "") for '@ViewBag.SearchTerm'...
+                    </p>
+                }
+
+            </div>
+
+
+
+    <div class="row">
 
             @foreach (var item in Model)
             {
@@ -53,6 +115,30 @@
 
             }
 
-        </div>
-        </div>
-        </section>
+            <div class="row mt-5">
+                    <div class="w-50 mx-auto text-center">
+                        Page @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) of @Model.PageCount
+                    </div>
+                    <div class="w-100">
+                        @Html.PagedListPager(
+                        Model,
+                        page => Url.Action("TiledWeapons",
+                        new {page, searchTerm = ViewBag.SearchTerm, categoryId = ViewBag.Category })
+                        )
+                    </div>
+            </div>
+
+            <div class="btn btn-box">
+                <a asp-action="TiledWeapons">
+                    View all Weapons
+                </a>
+            </div>
+
+        @*</div>
+            <div class="btn-box">
+            <a asp-action="TiledWeapons">
+                View All products
+            </a>
+        </div>*@
+    </div>
+</section>

@@ -142,5 +142,88 @@ namespace StoreFrontSchema.UI.MVC.Controllers
 
             return RedirectToAction("Index");
         }
+
+        public async Task<IActionResult> SubmitOrder()
+        {
+            #region Planning out our order submission
+
+            //The big picture:
+            //Create an order object when the user submits and save it to the DB
+            //- OrderDate (supplied programmatically)
+            // - UserId (supplied by active user)
+            //- ShipToName, City and Nation(State) > This will be pulled from UserDetails table by looking up the record for the current UserId
+            // Add the record to the _context (queue it to DB)
+            // Save DB changes
+
+            //Create an OrderProducts object for each item in the cart
+            // - ProductId > Pulled from the cart
+            // - OrderId > Pulled from the order object(above)
+            // - Qty > pulled from cart
+            // - ProductPrice > pulled from cart
+            // Add record to _context
+            // Save DB changes
+
+            #endregion
+
+            //Retrieve current users ID
+            //The code below is a mechanism provided by identity to retrieve userID in the current HttpContext.
+            //If you need to retrieve UserId in any controller, you can use this.
+
+            string? userId = (await _userManager.GetUserAsync(HttpContext.User))?.Id;
+
+            //Retrieve userdetails record
+
+            UserDetail ud = _context.UserDetails.Find(userId);
+
+            // Create the order object
+            Order o = new Order()
+            {
+                OrderDate = DateTime.Now,
+                UserId = userId,
+                ShipCity = ud.City,
+                ShipTo = ud.FirstName + " " + ud.LastName,
+                ShipNation = ud.Nation,
+                ShipZip = ud.Zip
+            };
+
+            //Add the order to the context
+            _context.Orders.Add(o);
+
+
+            //Retireve session shoppingCart
+            var sessionCart = HttpContext.Session.GetString("cart");
+
+            //Convert it to C#
+            Dictionary<int, CartItemViewModel> shoppingCart =
+                JsonConvert.DeserializeObject<Dictionary<int, CartItemViewModel>>(sessionCart);
+
+            //Create an order product object for each item in cart
+            foreach (var item in shoppingCart)
+            {
+                OrderProduct op = new OrderProduct()
+                {
+                    ProductId = item.Key,
+                    OrderId = o.OrderId,
+                    Quantity = (short)item.Value.Qty,
+                    ProductPrice = (decimal)item.Value.Weapon.ProductPrice,
+                };
+
+                //For linking table records we can add items(record) to an existing entity if the records are related
+                o.OrderProducts.Add(op);
+
+            }
+
+            //Save the changes to DB
+            _context.SaveChanges();
+
+            //Empty the cart(remove string from session)
+            //HttpContext.Session.Remove("cart");
+
+
+
+            //Redirect user to Orders Index
+            return RedirectToAction("Index", "Orders");
+
+        }
     }
 }

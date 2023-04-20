@@ -6,6 +6,18 @@
 
 <h1><em>@ViewData["Title"]</em></h1>
 
+@*
+    Steps to implement Datatables (for client-side search, filter, & page)
+    1) (_Layout) add the <script> for jQuery.js -- ONLY if it doesn't already exist
+    2) (_Layout) add the <script> for plugin.js (found on the plugin's website - either available from CDN or file download)
+    3) (_Layout) add the <link> for plugin.css (if required - some plugins do not require any CSS)
+    4) (Index) add/modify your HTML to fit the requirements of the plugin
+    - Here, we use Datatables with the default scaffolded <table> from EF - we don't need to make any adjustments
+    to implement the basic datatables functionality
+    5) (Index) call the plugin function from @section Scripts { }
+    6) (optional - CSS or Plugin Function) Customize the plugin - update styles, modifying the default implementation
+*@
+
 
 <p align="center">
     @if (User.IsInRole("Admin"))
@@ -97,3 +109,19 @@
             }
         </tbody>
     </table>
+@*
+    To implement datatables we need to add a section for scripts, then call the plugin function.
+    We can get that function from http://datatables.net
+*@
+
+@section scripts {
+
+    <script>
+
+        //Update the selector to target the element with the table class
+        let table = new DataTable('.table');
+
+
+    </script>
+
+}

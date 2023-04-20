@@ -12,7 +12,7 @@ namespace StoreFrontSchema.DATA.EF.Models
 
         public int OrderId { get; set; }
         public string UserId { get; set; } = null!;
-        public string? OrderDate { get; set; }
+        public DateTime OrderDate { get; set; }
         public string? ShipDate { get; set; }
         public string? ShipTo { get; set; }
         public string? ShipCity { get; set; }
