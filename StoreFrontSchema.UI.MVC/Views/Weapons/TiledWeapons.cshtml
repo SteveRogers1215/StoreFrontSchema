@@ -32,7 +32,7 @@
         </p>
 
         @*
-        Implementing search: 4/20/23
+        Implementing search: 
         - Add a <form>
         - Add an <input> textbox
         - Add an <input> submit
@@ -54,7 +54,7 @@
                     *@
                     
                     <label for="categoryId" class="control-label text-center d-block">Filter by Category</label>
-                    <select name="categoryId" class="form-control text-center mb-3" asp-items="ViewBag.CategoryId">
+                    <select name="categoryId" class="form-control text-center mb-3 pl-5 ml-5" style="margin-left:50px" asp-items="ViewBag.CategoryId">
                             <option value="0">[Choose a Category]</option>
                     </select>
 
@@ -64,7 +64,7 @@
                     Inputs for search
                     *@
                     <input type="text" name="searchTerm" class="form-control text-center" placeholder="Search Weapons..." />
-                    <input type="submit" value="Go" class="btn btn-primary text-center w-50 d-block" />
+                    <input type="submit" value="Go" class="btn btn-dark text-center w-50 d-block ml-5" style="margin-left:auto"/>
 
 
                 </form>
@@ -133,12 +133,6 @@
                     View all Weapons
                 </a>
             </div>
-
-        @*</div>
-            <div class="btn-box">
-            <a asp-action="TiledWeapons">
-                View All products
-            </a>
-        </div>*@
+                    
     </div>
 </section>
