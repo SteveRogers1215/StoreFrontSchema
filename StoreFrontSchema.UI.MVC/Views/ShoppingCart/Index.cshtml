@@ -12,7 +12,7 @@
             </h2>
 
             <p align="center">
-                <a asp-action="TiledWeapons" asp-controller="Weapons" class="btn btn-info">
+                <a asp-action="TiledWeapons" asp-controller="Weapons" class="btn btn-secondary">
                     Back to Shopping
                 </a>
             </p>
@@ -35,7 +35,7 @@
                         <th>Name</th>
                         <th>Price</th>
                         <th>Total</th>
-                        <th></th> @*Intentionally left blank for actions*@
+                        <th></th> @*left blank for actions*@
                     </tr>
                 </thead>
                 <tbody>
@@ -57,7 +57,7 @@
 
                                     <input type="text" name="qty" value="@item.Value.Qty" class="form-control d-block mx-auto text-center w-50" />
 
-                                    <input type="submit" value="Update Cart" class="btn btn-primary btn-sm" />
+                                    <input type="submit" value="Update Cart" class="btn btn-dark btn-sm ml-5"  />
 
 
 
@@ -102,15 +102,13 @@
 
                 @if (User.Identity.IsAuthenticated)
                 {
-                    <a asp-action="SubmitOrder" class="btn btn-primary">
+                    <a asp-action="SubmitOrder" class="btn btn-dark">
                         Submit Order
                     </a>
-
-                    <!--TODO: update Submit ORder button-->
+                    
                 }
                 else
-                {
-                    <!--BONUS: Create a link to the login page-->
+                {                    
                     <p>
                         To place this order, you must be logged in <a asp-area="Identity" asp-page="/Account/Login">Login</a>
                     </p>

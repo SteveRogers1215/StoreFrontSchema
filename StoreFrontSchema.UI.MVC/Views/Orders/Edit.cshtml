@@ -1,12 +1,11 @@
 ﻿@model StoreFrontSchema.DATA.EF.Models.Order
 
 @{
-    ViewData["Title"] = "Edit";
+    ViewData["Title"] = "Edit Order";
 }
 
-<h1>Edit</h1>
+<h1><em>@ViewData["Title"]</em></h1>
 
-<h4>Order</h4>
 <hr />
 <div class="row">
     <div class="col-md-4">
@@ -49,15 +48,15 @@
                 <span asp-validation-for="ShipZip" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <input type="submit" value="Save" class="btn btn-primary" />
+                <input type="submit" value="Save" class="btn btn-dark d-inline-block" />
+                <a asp-action="Index" class=" btn btn-secondary d-inline-block">Back to List</a>
             </div>
+            
         </form>
     </div>
 </div>
 
-<div>
-    <a asp-action="Index">Back to List</a>
-</div>
+
 
 @section Scripts {
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}

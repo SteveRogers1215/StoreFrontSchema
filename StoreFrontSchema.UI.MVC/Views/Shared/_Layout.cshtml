@@ -74,12 +74,12 @@
                     <li class="nav-item">
                         <a class="nav-link" href="@Url.Action("Index","Orders")">Orders</a>
                     </li>
-                    <li class="nav-item">
+                    @*<li class="nav-item">
                         <a class="nav-link" href="news.html">News</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="contact.html">Contact Us</a>
-                    </li>
+                        <a class="nav-link" href="contact.html">Contact</a>
+                    </li>*@
                     <li class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle" href="#" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="true"> <span class="nav-label">Admin</span> <span class="caret"></span></a>
                         <ul class="dropdown-menu">
@@ -87,7 +87,7 @@
                             <li><a asp-action="ListRoles" asp-controller="Administration">Roles</a></li>
                             <li><a asp-action="Index" asp-controller="Vendors">Vendors</a></li>
                             <li><a asp-action="Index" asp-controller="Categories">Categories</a></li>
-                            <li><a asp-action="Index" asp-controller="OrderProducts">Products in Orders</a></li>
+                            <li><a asp-action="Index" asp-controller="OrderProducts">Order History</a></li>
                         </ul>
                     </li>
                 </ul>
@@ -129,26 +129,17 @@
 
                             </sup>
                         }
-                        <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAB4AAAAeCAYAAAA7MK6iAAAAAXNSR0IArs4c6QAAAZBJREFUSEvNlrsyBEEUhr+Vuz0BQhGZ0OUJeAIklIiQiIyQSJHgCXgCl1BGJMQTuOWoX/VMHatnpnumt0ZXbdXuzunz9fn7XKZDS6vTEpd/AR4FRowCN71Uw0a8A2wb2CswC9z14gBlYPGuHTw524IltT5a88C6+66odYCkqyi5hoAXRzoDlpJSoTSrT4FFB5xJAH6z+VJWToJdJQBaFwvAhf6oqmNl9ERC+DIgJSvButuThOBhQGVaCVaSPQGDCeC/krRKavH2TWk14ef3GxKxbFTbj02IwLPpET+uQiLOOth0A/gBsGH3h4LVyc4bgMdcruQuQsHaoCSz0yv0HPfAZLdxDLh7eoWC89qtI7X22P4dCpVdXrt1wXVK609SZfAYqbM9MQOjcJzWAa842Q+BD4/m/cCaa43HRXcSC94FNp0zTa45j+NL89ayB2z54LFg6/QL6PM4/TSNqehwwZ0r8y+Zj9wPybjqAeu57LT03Ct3bMRyNg4MALclNTUFvAMPqe44pn5LbetEnATeGvgb9fI5HwAK1bkAAAAASUVORK5CYII=" alt="ShoppingCart" />
+                        <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAB4AAAAeCAYAAAA7MK6iAAAAAXNSR0IArs4c6QAAAZBJREFUSEvNlrsyBEEUhr+Vuz0BQhGZ0OUJeAIklIiQiIyQSJHgCXgCl1BGJMQTuOWoX/VMHatnpnumt0ZXbdXuzunz9fn7XKZDS6vTEpd/AR4FRowCN71Uw0a8A2wb2CswC9z14gBlYPGuHTw524IltT5a88C6+66odYCkqyi5hoAXRzoDlpJSoTSrT4FFB5xJAH6z+VJWToJdJQBaFwvAhf6oqmNl9ERC+DIgJSvButuThOBhQGVaCVaSPQGDCeC/krRKavH2TWk14ef3GxKxbFTbj02IwLPpET+uQiLOOth0A/gBsGH3h4LVyc4bgMdcruQuQsHaoCSz0yv0HPfAZLdxDLh7eoWC89qtI7X22P4dCpVdXrt1wXVK609SZfAYqbM9MQOjcJzWAa842Q+BD4/m/cCaa43HRXcSC94FNp0zTa45j+NL89ayB2z54LFg6/QL6PM4/TSNqehwwZ0r8y+Zj9wPybjqAeu57LT03Ct3bMRyNg4MALclNTUFvAMPqe44pn5LbetEnATeGvgb9fI5HwAK1bkAAAAASUVORK5CYII=" alt="ShoppingCart" class="pr-12"/>
                         <!--Shopping Cart that I cant get to work above-->
                     </a>
-                </li>
-
+                </li>           
                 
-                @*<form class="form-inline my-2 my-lg-0">
-                    <div class="login_menu">
-                        <ul>
-                            <li><a href="#">Login</a></li>
-                            <li><a href="#"><img src="~/images/trolly-icon.png"></a></li>
-                            <li><a href="#"><img src="~/images/search-icon.png"></a></li>
-                        </ul>
-                    </div>
-                    <div></div>
-                </form>*@
             </div>
+
             <div id="main">
                 <span style="font-size:36px;cursor:pointer; color: #fff" onclick="openNav()"><img src="~/images/toggle-icon.png" style="height: 30px;"></span>
             </div>
+
         </nav>
         <!-- banner section start -->
         <div class="banner_section layout_padding">
@@ -164,7 +155,7 @@
                                 <div class="col-md-5">
                                     <h1 class="banner_taital"><em>WarTech Industries</em></h1>
                                     <p class="banner_text">Do you wish to cause mental distress, terror, and anguish to <em>every</em> opponent?</p>
-                                    <div class="contact_bt"><a asp-controller="Weapons">Shop Now</a></div>
+                                    <div class="contact_bt"><a asp-action="TiledWeapons"asp-controller="Weapons">Shop Now</a></div>
                                 </div>
                             </div>
                         </div>
@@ -179,7 +170,7 @@
                                 <div class="col-md-5">
                                     <h1 class="banner_taital">Newly Forged Weapons!</h1>
                                     <p class="banner_text">Do you have a long running blood-feud or vendetta? You're in the right place! </p>
-                                    <div class="contact_bt"><a asp-action="Contact" asp-controller="Home">Shop Now</a></div>
+                                    <div class="contact_bt"><a asp-action="TiledWeapons" asp-controller="Weapons">Shop Now</a></div>
                                 </div>
                             </div>
                         </div>
@@ -194,7 +185,7 @@
                                 <div class="col-md-5">
                                     <h1 class="banner_taital">Newly Forged Weapons!</h1>
                                     <p class="banner_text">Whether you're facing the undead, fell-beasts, or simply unwanted visitors at your door...'</p>
-                                    <div class="contact_bt"><a asp-action="Contact" asp-controller="Home">Shop Now</a></div>
+                                    <div class="contact_bt"><a asp-action="TiledWeapons" asp-controller="Weapons">Shop Now</a></div>
                                 </div>
                             </div>
                         </div>
